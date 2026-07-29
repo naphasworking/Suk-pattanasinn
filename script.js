@@ -193,6 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const lbDots   = document.getElementById('lb-dots');
     const lbTitle  = document.getElementById('lb-title');
     const lbCount  = document.getElementById('lb-count');
+    const lbPrev   = document.getElementById('lb-prev');
+    const lbNext   = document.getElementById('lb-next');
     let   lbActive = 0;
 
     // Asset/projects/<slug>  ->  [Asset/projects/<slug>/01.jpg, .../02.jpg, ...]
@@ -229,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setCount(i, total) {
         lbCount.textContent = total > 1 ? `${i + 1} / ${total}` : '';
+        lbPrev.disabled = i <= 0;
+        lbNext.disabled = i >= total - 1;
     }
 
     function closeLightbox() {
@@ -272,6 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dot) goToSlide(+dot.dataset.go);
     });
 
+    lbPrev.addEventListener('click', () => goToSlide(lbActive - 1));
+    lbNext.addEventListener('click', () => goToSlide(lbActive + 1));
+
     /* A plain mouse wheel only produces deltaY, which would do nothing in a
        horizontally-scrolling track. Translate it so the wheel scrolls right. */
     lbTrack.addEventListener('wheel', e => {
@@ -281,8 +288,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     document.getElementById('lb-close').addEventListener('click', closeLightbox);
+
+    /* A swipe that the browser resolves as a tap was closing the gallery
+       mid-gesture. Measure the travel and only treat a near-stationary
+       pointer as a real tap. */
+    let downX = 0, downY = 0, dragged = false;
+    lb.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; dragged = false; });
+    lb.addEventListener('pointermove', e => {
+        if (Math.hypot(e.clientX - downX, e.clientY - downY) > 10) dragged = true;
+    });
+
     lb.addEventListener('click', e => {
-        // clicks on the backdrop or the padding around a slide close it
+        if (dragged) return;
+        // taps on the backdrop or the empty area around a slide close it
         if (e.target === lb || e.target === lbTrack || e.target.classList.contains('lb-slide')) closeLightbox();
     });
 

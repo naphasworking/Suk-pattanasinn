@@ -784,13 +784,23 @@ html[lang="th"] .contact-intro .sec-title { line-height: 1.3; }
     scrollbar-width: none;                /* the dots are the indicator */
     outline: none;
     border-radius: 4px;
+
+    /* Declares the gesture as horizontal. Without this the browser is free to
+       claim a slightly diagonal swipe for the vertical axis — which is locked
+       while the modal is open — so the swipe did nothing at all. */
+    touch-action: pan-x pinch-zoom;
+
+    /* stops a swipe past the first image triggering iOS back-navigation */
+    overscroll-behavior-x: contain;
 }
 .lb-track::-webkit-scrollbar { display: none; }
 
 .lb-slide {
     flex: 0 0 100%;
     scroll-snap-align: center;
-    scroll-snap-stop: always;             /* never skip past a shot */
+    /* deliberately NOT scroll-snap-stop: always — that caught every single
+       image, so reaching shot 12 of a gallery took 12 separate swipes.
+       Momentum now carries through several and still lands on one. */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -804,6 +814,43 @@ html[lang="th"] .contact-intro .sec-title { line-height: 1.3; }
     object-fit: contain;
     border-radius: 3px;
     box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+    /* a long-press drag on the image would otherwise start a native image
+       drag / save instead of scrolling the track */
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+/* ── Prev / next ────────────────────────────────────────────
+   Swiping is the primary interaction, but it needs a reliable
+   fallback: 44px targets, the minimum that is comfortable to hit. */
+.lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 44px; height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--paper);
+    background: rgba(6, 30, 26, .55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(247, 245, 242, .16);
+    transition: background .3s var(--ease), opacity .3s var(--ease);
+}
+.lb-prev { left: clamp(.25rem, 1vw, .75rem); }
+.lb-next { right: clamp(.25rem, 1vw, .75rem); }
+.lb-nav:hover { background: rgba(6, 30, 26, .85); }
+.lb-nav:disabled { opacity: 0; pointer-events: none; }
+.lb-nav svg {
+    width: 17px; height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 /* ── Dot markers, sitting on the image's lower edge ───────── */
@@ -822,10 +869,15 @@ html[lang="th"] .contact-intro .sec-title { line-height: 1.3; }
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(247, 245, 242, .14);
     max-width: calc(100% - 2rem);
-    overflow-x: auto;
-    scrollbar-width: none;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    /* The pill overlaps the image's lower edge, so it used to swallow any
+       swipe that began there — and being its own scroll container, the drag
+       scrolled the dots instead of the gallery. Now gestures pass straight
+       through to the track and only the dots themselves stay tappable. */
+    pointer-events: none;
 }
-.lb-dots::-webkit-scrollbar { display: none; }
 .lb-dots:has(.lb-dot:only-child) { display: none; }   /* single shot: no dots */
 
 .lb-dot {
@@ -835,6 +887,7 @@ html[lang="th"] .contact-intro .sec-title { line-height: 1.3; }
     border-radius: 999px;
     background: rgba(247, 245, 242, .34);
     transition: background .3s var(--ease), width .35s var(--ease);
+    pointer-events: auto;             /* re-enabled inside the pass-through pill */
 }
 .lb-dot:hover { background: rgba(247, 245, 242, .65); }
 .lb-dot.active {
