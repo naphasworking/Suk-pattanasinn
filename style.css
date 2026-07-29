@@ -1,0 +1,1072 @@
+/* ============================================================
+   SUK Pattanasin — สุขพัฒนสิน
+   Light editorial architectural. Thai-first.
+   ============================================================ */
+
+/* Palette taken from the client's own brand: deep emerald + gold.
+   The cream canvas stays because their portfolio is bright white and pastel
+   3D renders — a dark site would fight every image. Emerald carries the brand
+   on the dark sections and in type; gold appears only on emerald, where it
+   reaches 6.96:1. Gold on cream is 1.66:1 and is never used that way. */
+:root {
+    --paper:      #F7F5F2;
+    --paper-warm: #EFEAE3;
+    --paper-deep: #E4DED5;
+
+    --emerald:      #0B3A34;   /* brand dark  */
+    --emerald-deep: #072B26;   /* footer — one shade under the contact block */
+    --emerald-mid:  #1A4D46;   /* 8.80:1 on cream */
+    --gold:         #C9A87C;   /* brand gold — dark backgrounds only */
+    --gold-pale:    #D4BDA5;
+
+    --ink:        #14211E;     /* warm near-black with a green cast */
+    --ink-soft:   #38473F;
+    --muted:      #6E7B74;
+    --line:       rgba(11, 58, 52, .15);
+    --line-soft:  rgba(11, 58, 52, .08);
+    --accent:     var(--emerald-mid);
+
+    --shell: 1280px;
+    --gut: clamp(1.25rem, 5vw, 5rem);
+
+    /* Latin glyphs come from the first family, Thai falls through to the second */
+    --serif: 'Cormorant Garamond', 'Noto Serif Thai', Georgia, serif;
+    --sans:  'Inter', 'IBM Plex Sans Thai', system-ui, sans-serif;
+
+    --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* Native smooth scrolling must stay OFF while Lenis is driving, or the browser
+   re-animates every scrollTo() Lenis issues per frame and scrolling crawls.
+   script.js adds .no-lenis when Lenis isn't running, so anchors still glide. */
+html.no-lenis { scroll-behavior: smooth; }
+
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    /* clip, NOT hidden: overflow-x:hidden makes body a scroll container, which
+       silently kills position:sticky on the hero. clip contains overflow
+       without creating one. */
+    overflow-x: clip;
+}
+
+/* Thai needs a touch more leading than Latin */
+html[lang="th"] body { line-height: 1.9; }
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.shell { width: 100%; max-width: var(--shell); margin: 0 auto; padding: 0 var(--gut); }
+
+::selection { background: var(--ink); color: var(--paper); }
+
+/* Visible to screen readers only — labels the icon-only contact rows */
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Reveal ─────────────────────────────────────────────── */
+.rv, .rv-img { opacity: 0; }
+.no-js .rv, .no-js .rv-img { opacity: 1; }
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+    display: inline-block;
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 1.05rem 2.1rem;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .45s var(--ease), color .45s var(--ease);
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+
+.btn-solid {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+}
+.btn-solid:hover { background: transparent; color: var(--paper); border-color: var(--paper); }
+
+/* For the hero, which is now a dark panel */
+.btn-ghost {
+    border-color: rgba(247, 245, 242, .45);
+    color: var(--paper);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+.btn-ghost:hover { background: var(--paper); color: var(--emerald); border-color: var(--paper); }
+
+/* html[lang] switches wipe the uppercase transform for Thai — it renders badly */
+html[lang="th"] .btn { text-transform: none; letter-spacing: .04em; font-size: .85rem; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+/* At rest the nav floats over the dark hero, so it runs light. Once .stuck
+   lands it sits on an opaque cream bar and flips to the ink palette. */
+.nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 200;
+    padding: 1.5rem 0;
+    color: var(--paper);
+    transition: background .5s var(--ease), padding .5s var(--ease),
+                box-shadow .5s var(--ease), color .4s var(--ease);
+}
+.nav .nav-cta   { border-color: rgba(247, 245, 242, .45); }
+.nav .nav-cta:hover { background: var(--paper); color: var(--emerald); }
+.nav .lang-btn  { color: rgba(247, 245, 242, .55); }
+.nav .lang-btn.active,
+.nav .lang-btn:hover { color: var(--paper); }
+.nav .lang-sep  { color: rgba(247, 245, 242, .3); }
+.nav .burger span { background: var(--paper); }
+
+/* .menu-open joins .stuck here: the open drawer is a cream sheet, so anything
+   still in the light palette would disappear against it. */
+.nav.stuck, .nav.menu-open { color: var(--ink); }
+.nav.stuck .nav-cta, .nav.menu-open .nav-cta { border-color: var(--ink); }
+.nav.stuck .nav-cta:hover, .nav.menu-open .nav-cta:hover { background: var(--ink); color: var(--paper); }
+.nav.stuck .lang-btn, .nav.menu-open .lang-btn { color: var(--muted); }
+.nav.stuck .lang-btn.active, .nav.stuck .lang-btn:hover,
+.nav.menu-open .lang-btn.active, .nav.menu-open .lang-btn:hover { color: var(--ink); }
+.nav.stuck .lang-sep, .nav.menu-open .lang-sep { color: var(--line); }
+.nav.stuck .burger span, .nav.menu-open .burger span { background: var(--ink); }
+
+/* Gold mark over the dark hero, emerald mark on the cream bar or open drawer */
+.brand-emerald { display: none; }
+.nav.stuck .brand-gold, .nav.menu-open .brand-gold { display: none; }
+.nav.stuck .brand-emerald, .nav.menu-open .brand-emerald { display: block; }
+.nav.stuck {
+    /* Near-opaque so a cheap 6px blur reads the same as a costly 14px one.
+       Backdrop-filter on a fixed bar re-samples the page every scroll frame. */
+    background: rgba(247, 245, 242, .95);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: .85rem 0;
+    box-shadow: 0 1px 0 var(--line-soft);
+}
+
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+
+.brand { display: flex; align-items: center; gap: .75rem; }
+.brand-mark {
+    height: 46px;
+    width: auto;
+    transition: height .5s var(--ease);
+}
+.nav.stuck .brand-mark { height: 38px; }
+
+/* The mark already reads "SUK PATTANASIN", so the text lockup is a fallback
+   only — it appears if the PNG fails to load (onerror adds .no-mark). */
+.brand-type { display: none; flex-direction: column; line-height: 1.15; }
+.brand.no-mark .brand-type { display: flex; }
+.brand-en { font-size: .82rem; letter-spacing: .22em; font-weight: 500; }
+.brand-th { font-size: .72rem; letter-spacing: .06em; color: var(--muted); }
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    list-style: none;
+    font-size: .84rem;
+    letter-spacing: .02em;
+}
+.nav-links a { position: relative; padding: .25rem 0; }
+.nav-links a:not(.nav-cta)::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .5s var(--ease);
+}
+.nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-cta {
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: .5rem 1.2rem !important;
+    transition: background .4s var(--ease), color .4s var(--ease);
+}
+.nav-cta:hover { background: var(--ink); color: var(--paper); }
+
+.nav-right { display: flex; align-items: center; gap: 1.25rem; }
+
+.lang { display: flex; align-items: center; gap: .4rem; font-size: .74rem; letter-spacing: .1em; }
+.lang-btn { color: var(--muted); transition: color .3s; }
+.lang-btn.active { color: var(--ink); font-weight: 500; }
+.lang-btn:hover { color: var(--ink); }
+.lang-sep { color: var(--line); }
+
+.burger { display: none; width: 26px; height: 16px; position: relative; }
+.burger span {
+    position: absolute; left: 0;
+    width: 100%; height: 1px;
+    background: var(--ink);
+    transition: transform .45s var(--ease), opacity .3s;
+}
+.burger span:first-child { top: 3px; }
+.burger span:last-child  { bottom: 3px; }
+.burger.open span:first-child { transform: translateY(4.5px) rotate(45deg); }
+.burger.open span:last-child  { transform: translateY(-4.5px) rotate(-45deg); }
+
+/* ============================================================
+   HERO — text and image merged into one full-bleed panel.
+   Pinned with position:sticky so the content plate below slides
+   up over it (the sticky-stack transition).
+   ============================================================ */
+.hero {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    /* centred, not bottom-aligned: the stack plate rises from the bottom, so
+       bottom-aligned copy would be covered almost immediately */
+    justify-content: center;
+    padding: clamp(6rem, 14vh, 9rem) 0 clamp(5rem, 10vh, 8rem);
+    overflow: hidden;
+    background: var(--emerald);
+    color: var(--paper);
+}
+
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    /* anchor right: keeps the diamond photos in frame and pushes the
+       artwork's own logo + style words off the left edge */
+    object-position: 76% center;
+}
+.hero-bg.is-empty { background: var(--emerald); }
+
+/* Legibility scrim. Two layers: a strong left-to-right emerald wash that the
+   text sits on, plus a soft bottom lift so the button and cue never land on a
+   bright patch of render. Measured: cream on the darkest stop is 12.4:1. */
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(101deg,
+            rgba(6, 30, 26, .95)  0%,
+            rgba(6, 30, 26, .92) 30%,
+            rgba(6, 30, 26, .84) 50%,
+            rgba(6, 30, 26, .46) 72%,
+            rgba(6, 30, 26, .18) 100%),
+        linear-gradient(to top,
+            rgba(6, 30, 26, .55) 0%,
+            rgba(6, 30, 26, 0)  38%);
+}
+
+.hero-inner { position: relative; z-index: 1; }
+
+.eyebrow {
+    font-size: .74rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+html[lang="th"] .eyebrow { text-transform: none; letter-spacing: .1em; font-size: .84rem; }
+
+.hero-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.6rem, 7.6vw, 6.6rem);
+    line-height: 1.06;
+    letter-spacing: -.015em;
+    text-shadow: 0 2px 30px rgba(6, 30, 26, .5);
+}
+html[lang="th"] .hero-title { line-height: 1.26; font-size: clamp(2rem, 6.2vw, 5rem); }
+
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .line-in { display: block; }
+.hero-title .em { font-style: italic; color: var(--gold-pale); }
+html[lang="th"] .hero-title .em { font-style: normal; }
+
+.hero-foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(2rem, 6vw, 5rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    flex-wrap: wrap;
+}
+.hero-desc {
+    max-width: 46ch;
+    color: rgba(247, 245, 242, .82);
+    font-size: 1.02rem;
+    text-shadow: 0 1px 20px rgba(6, 30, 26, .6);
+}
+
+/* thin animated line, replaces a "scroll" label — no text to translate */
+.scroll-cue {
+    position: absolute;
+    left: 50%; bottom: 0;
+    width: 1px; height: clamp(2.5rem, 6vh, 4.5rem);
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    transform-origin: bottom;
+    animation: cue 2.6s var(--ease) infinite;
+    z-index: 1;
+}
+@keyframes cue {
+    0%, 100% { transform: scaleY(.35); opacity: .35; }
+    50%      { transform: scaleY(1);   opacity: 1; }
+}
+
+/* ============================================================
+   STICKY STACK
+   The plate holding every section after the hero. It scrolls up
+   over the pinned hero, then each major section inside it carries
+   the same rounded-lip + shadow so every transition reads as one
+   card sliding over the last.
+   ============================================================ */
+/* The plate must be opaque HERE, not on its first child. Several sections
+   inside it (services, work, about, footer) declare no background of their
+   own, so with only .specs painted the pinned hero showed through them. */
+.stack {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: clamp(20px, 3vw, 34px) clamp(20px, 3vw, 34px) 0 0;
+    box-shadow: 0 -28px 70px rgba(6, 30, 26, .34);
+}
+
+/* Each subsequent band gets its own lip so the stacking continues */
+.stack .section-alt,
+.stack .section-dark,
+.stack .styles {
+    border-radius: clamp(20px, 3vw, 34px) clamp(20px, 3vw, 34px) 0 0;
+    position: relative;
+}
+.stack .section-alt { box-shadow: 0 -20px 50px rgba(6, 30, 26, .10); }
+/* warm tint so this lip is actually visible — paper on paper reads as nothing */
+.stack .styles      { box-shadow: 0 -20px 50px rgba(6, 30, 26, .08); background: var(--paper-warm); }
+.stack .section-dark { box-shadow: 0 -24px 60px rgba(6, 30, 26, .30); }
+
+/* ============================================================
+   PLACEHOLDER BLOCKS
+   Render whenever a photo is missing, so the layout still reads
+   as finished. They disappear the moment a real image loads.
+   ============================================================ */
+.ph {
+    position: relative;
+    overflow: hidden;
+    background: var(--paper-warm);
+}
+.ph img { width: 100%; height: 100%; object-fit: cover; }
+
+.ph.is-empty::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            transparent 0 22px,
+            rgba(11, 58, 52, .03) 22px 44px
+        ),
+        linear-gradient(160deg, var(--paper-warm), var(--paper-deep));
+}
+.ph.is-empty::after {
+    content: attr(data-ph);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .68rem;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: rgba(11, 58, 52, .32);
+}
+
+/* ============================================================
+   SPECIALISMS
+   ============================================================ */
+/* no border-top: this band is the stack's leading edge and carries a
+   rounded lip instead — a hairline would cut across the curve */
+.specs { border-bottom: 1px solid var(--line); }
+.specs-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.spec {
+    padding: clamp(2rem, 4vw, 3.25rem) clamp(.75rem, 2vw, 2rem);
+    border-left: 1px solid var(--line-soft);
+}
+.spec:first-child { border-left: 0; padding-left: 0; }
+.spec-no {
+    display: block;
+    font-size: .7rem;
+    letter-spacing: .22em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+.spec-name {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    line-height: 1.25;
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+html[lang="th"] .spec-name { line-height: 1.45; font-size: clamp(1.15rem, 1.9vw, 1.5rem); }
+.spec-note { font-size: .82rem; color: var(--muted); line-height: 1.55; display: block; }
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+.section { padding: clamp(5rem, 12vw, 9.5rem) 0; }
+.section-alt { background: var(--paper-warm); }
+
+.sec-head { max-width: 62ch; margin-bottom: clamp(3rem, 7vw, 5.5rem); }
+.sec-index {
+    display: block;
+    font-size: .72rem;
+    letter-spacing: .24em;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+}
+.sec-index.light { color: rgba(247, 245, 242, .5); }
+
+.sec-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.95rem, 4.4vw, 3.5rem);
+    line-height: 1.15;
+    letter-spacing: -.01em;
+    margin-bottom: 1.25rem;
+}
+html[lang="th"] .sec-title { line-height: 1.4; }
+
+.sec-lede { color: var(--muted); max-width: 52ch; }
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+.svc-list { border-top: 1px solid var(--line); }
+.svc {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: clamp(1rem, 4vw, 3rem);
+    align-items: start;
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    border-bottom: 1px solid var(--line);
+    transition: background .5s var(--ease);
+}
+.svc:hover { background: rgba(11, 58, 52, .025); }
+.svc-no { font-size: .74rem; letter-spacing: .18em; color: var(--muted); padding-top: .6rem; }
+.svc h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    line-height: 1.3;
+}
+.svc p { color: var(--muted); max-width: 54ch; }
+
+/* ============================================================
+   STYLES STRIP
+   ============================================================ */
+.styles {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    border-bottom: 1px solid var(--line);
+}
+.styles-lede { color: var(--muted); margin-bottom: 2rem; font-size: .95rem; }
+.styles-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: baseline;
+}
+.style-word {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 5vw, 3.6rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    transition: color .4s var(--ease), font-style .4s;
+}
+.style-word:hover { color: var(--accent); font-style: italic; }
+
+/* ============================================================
+   WORK
+   ============================================================ */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.filter {
+    font-size: .8rem;
+    padding: .5rem 1.15rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    transition: color .35s, border-color .35s, background .35s;
+}
+.filter:hover { color: var(--ink); border-color: var(--ink); }
+.filter.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.card { cursor: pointer; }
+.card.hidden { display: none; }
+
+.card-media { position: relative; overflow: hidden; aspect-ratio: 4 / 3; }
+.card-media .ph { position: absolute; inset: 0; }
+.card-media img,
+.card-media .ph::before,
+.card-media .ph::after { transition: transform 1.1s var(--ease); }
+.card:hover .card-media img { transform: scale(1.045); }
+
+.card-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.1rem;
+}
+.card-title {
+    font-family: var(--serif);
+    font-size: 1.28rem;
+    font-weight: 400;
+    line-height: 1.35;
+}
+.card-cat { font-size: .74rem; letter-spacing: .12em; color: var(--muted); white-space: nowrap; }
+.card-sub { font-size: .84rem; color: var(--muted); padding-top: .3rem; }
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+.steps { list-style: none; counter-reset: none; border-top: 1px solid var(--line); }
+.step {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: clamp(1rem, 4vw, 3rem);
+    padding: clamp(1.75rem, 3.5vw, 2.75rem) 0;
+    border-bottom: 1px solid var(--line);
+}
+.step-no { font-size: .74rem; letter-spacing: .18em; color: var(--muted); padding-top: .55rem; }
+.step h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    margin-bottom: .5rem;
+}
+.step p { color: var(--muted); max-width: 60ch; }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 7vw, 6rem);
+    align-items: start;
+}
+.ph-about { aspect-ratio: 4 / 5; }
+.about-body > p { color: var(--ink-soft); margin-bottom: 2.5rem; max-width: 56ch; }
+
+.why { list-style: none; border-top: 1px solid var(--line); }
+.why li { padding: 1.25rem 0; border-bottom: 1px solid var(--line-soft); }
+.why strong { display: block; font-weight: 500; font-size: .98rem; margin-bottom: .2rem; }
+.why span { color: var(--muted); font-size: .9rem; }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.section-dark { background: var(--emerald); color: var(--paper); }
+.section-dark .sec-lede,
+.section-dark .contact-intro > p { color: rgba(247, 245, 242, .68); }
+
+/* ── Compacted: this block was the tallest on the page for the least content ── */
+#contact { padding: clamp(3.5rem, 7vw, 5.5rem) 0; }
+
+/* Gold mark, used only here where it has real contrast */
+.contact-mark { height: 44px; width: auto; margin-bottom: 1.1rem; opacity: .95; }
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+}
+.contact-intro .sec-index { margin-bottom: .7rem; }
+/* smaller than the other section titles so the Thai fits one line here */
+.contact-intro .sec-title {
+    font-size: clamp(1.6rem, 2.9vw, 2.4rem);
+    margin-bottom: .85rem;
+}
+html[lang="th"] .contact-intro .sec-title { line-height: 1.3; }
+.contact-intro > p { max-width: 44ch; margin-bottom: 1.75rem; font-size: .95rem; }
+
+
+/* ── Form ───────────────────────────────────────────────── */
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.05rem 1.25rem; }
+.field { display: flex; flex-direction: column; gap: .35rem; }
+.field-full { grid-column: 1 / -1; }
+
+.field label {
+    font-size: .74rem;
+    letter-spacing: .1em;
+    color: rgba(247, 245, 242, .55);
+}
+.field input,
+.field select,
+.field textarea {
+    font: inherit;
+    font-size: .95rem;
+    color: var(--paper);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(247, 245, 242, .22);
+    padding: .6rem 0;
+    border-radius: 0;
+    transition: border-color .4s var(--ease);
+}
+.field textarea { resize: vertical; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { outline: none; border-bottom-color: var(--paper); }
+.field select option { background: var(--ink); color: var(--paper); }
+.field ::placeholder { color: rgba(247, 245, 242, .3); }
+
+.field.invalid input,
+.field.invalid select { border-bottom-color: #E08A5F; }
+
+.form .btn { grid-column: 1 / -1; justify-self: start; margin-top: .35rem; }
+
+.form-note {
+    grid-column: 1 / -1;
+    font-size: .85rem;
+    color: rgba(247, 245, 242, .6);
+    min-height: 1.3em;
+}
+.form-note.ok  { color: #9FD3A8; }
+.form-note.err { color: #E08A5F; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+/* One shade deeper than the contact block above it, so the two dark bands
+   separate without a hard rule and the page closes on brand colour rather
+   than flipping back to cream at the very end. */
+.footer {
+    background: var(--emerald-deep);
+    color: var(--paper);
+    padding: clamp(2.5rem, 5.5vw, 4rem) 0 clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+    border-bottom: 1px solid rgba(247, 245, 242, .1);
+}
+
+.foot-mark { height: 50px; width: auto; margin-bottom: 1rem; }
+.foot-tag { font-size: .88rem; color: rgba(247, 245, 242, .6); max-width: 32ch; }
+
+/* ── Contact rows with leading icons ───────────────────────── */
+.foot-contact {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .8rem 2rem;
+    align-content: start;
+}
+.foot-contact li {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    font-size: .9rem;
+    color: rgba(247, 245, 242, .88);
+    min-width: 0;
+}
+.foot-contact a { transition: color .3s var(--ease); }
+.foot-contact a:hover { color: var(--gold); }
+
+/* Inline SVG, stroked in gold. Shared with .contact-quick above. */
+.ico {
+    flex: 0 0 auto;
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.footer-base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: clamp(1.1rem, 2.5vw, 1.6rem);
+}
+.foot-copy { font-size: .76rem; color: rgba(247, 245, 242, .45); letter-spacing: .02em; }
+.foot-copy a { transition: color .3s; }
+.foot-copy a:hover { color: var(--gold); }
+
+/* The two quick contacts kept beside the form */
+.contact-quick { list-style: none; display: flex; flex-wrap: wrap; gap: .75rem 2rem; }
+.contact-quick li { display: flex; align-items: center; gap: .6rem; font-size: .95rem; }
+.contact-quick a { transition: color .3s; }
+.contact-quick a:hover { color: var(--gold); }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lb {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    background: rgba(7, 33, 29, .94);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity .45s var(--ease);
+    /* stops a swipe on the track from chaining into the page behind */
+    overscroll-behavior: contain;
+}
+.lb.open { display: flex; opacity: 1; }
+
+.lb-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1180px;
+}
+
+/* ── The scroll-snap track ──────────────────────────────────
+   One slide per viewport width. Native horizontal scrolling gives
+   trackpad and touch swipe for free; script.js maps a plain mouse
+   wheel onto it and drives it from the dots and arrow keys. */
+.lb-track {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;                /* the dots are the indicator */
+    outline: none;
+    border-radius: 4px;
+}
+.lb-track::-webkit-scrollbar { display: none; }
+
+.lb-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;             /* never skip past a shot */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+}
+.lb-slide.gone { display: none; }
+.lb-slide img {
+    width: auto;
+    max-width: 100%;
+    max-height: 76vh;
+    object-fit: contain;
+    border-radius: 3px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+}
+
+/* ── Dot markers, sitting on the image's lower edge ───────── */
+.lb-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 50%);      /* straddles the bottom border */
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .6rem .95rem;
+    border-radius: 999px;
+    background: rgba(6, 30, 26, .72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(247, 245, 242, .14);
+    max-width: calc(100% - 2rem);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.lb-dots::-webkit-scrollbar { display: none; }
+.lb-dots:has(.lb-dot:only-child) { display: none; }   /* single shot: no dots */
+
+.lb-dot {
+    flex: 0 0 auto;
+    width: 7px; height: 7px;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(247, 245, 242, .34);
+    transition: background .3s var(--ease), width .35s var(--ease);
+}
+.lb-dot:hover { background: rgba(247, 245, 242, .65); }
+.lb-dot.active {
+    width: 22px;
+    background: var(--gold);
+}
+
+/* ── Caption bar ───────────────────────────────────────────── */
+.lb-bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1180px;
+    margin-top: 2.25rem;
+    flex-wrap: wrap;
+}
+.lb-title { color: rgba(247, 245, 242, .8); font-size: .9rem; }
+.lb-count {
+    color: var(--gold);
+    font-size: .8rem;
+    letter-spacing: .14em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.lb-close {
+    position: absolute;
+    top: clamp(1rem, 3vw, 2rem);
+    right: clamp(1rem, 3vw, 2.5rem);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--paper);
+    opacity: .6;
+    transition: opacity .3s;
+}
+.lb-close:hover { opacity: 1; }
+
+/* ============================================================
+   STICKY MOBILE DOCK
+   ============================================================ */
+.dock {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 180;
+    display: none;
+    gap: .5rem;
+    padding: .6rem .75rem calc(.6rem + env(safe-area-inset-bottom));
+    background: rgba(247, 245, 242, .97);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid var(--line-soft);
+}
+.dock-btn {
+    flex: 1;
+    text-align: center;
+    font-size: .82rem;
+    padding: .8rem .5rem;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+}
+.dock-solid { background: var(--ink); color: var(--paper); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .svc { grid-template-columns: 3.5rem 1fr; }
+    .svc p { grid-column: 2; }
+    .about-grid { grid-template-columns: 1fr; }
+    .ph-about { aspect-ratio: 16 / 10; }
+    .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+    .burger { display: block; }
+    .nav-links {
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        background: var(--paper);
+        font-size: 1.35rem;
+        font-family: var(--serif);
+        transform: translateY(-100%);
+        transition: transform .65s var(--ease);
+        z-index: -1;
+    }
+    /* the drawer is cream, so its contents must run dark even while the nav
+       itself is in light-over-hero mode */
+    .nav-links.open { transform: translateY(0); }
+    .nav .nav-links { color: var(--ink); }
+    .nav .nav-links .nav-cta { border-color: var(--ink); color: var(--ink); }
+    .nav .nav-links .nav-cta:hover { background: var(--ink); color: var(--paper); }
+    .nav-cta { font-family: var(--sans); font-size: .9rem; }
+
+    /* a 2.6:1 banner leaves almost no vertical room on a phone; anchor further
+       into the photo cluster and let the scrim carry legibility */
+    .hero-bg img { object-position: 68% center; }
+    .hero-scrim {
+        background:
+            linear-gradient(180deg,
+                rgba(6, 30, 26, .82) 0%,
+                rgba(6, 30, 26, .70) 45%,
+                rgba(6, 30, 26, .88) 100%);
+    }
+
+    .specs-grid { grid-template-columns: 1fr 1fr; }
+    .spec { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-soft); }
+    .spec:nth-child(-n+2) { border-top: 0; }
+    .spec:nth-child(even) { padding-left: 1.5rem; border-left: 1px solid var(--line-soft); }
+
+    .hero-foot { flex-direction: column; align-items: flex-start; }
+    .form { grid-template-columns: 1fr; }
+    /* footer stacks: brand block, then one contact row per line */
+    .footer-top { grid-template-columns: 1fr; gap: 1.75rem; }
+    .foot-contact { grid-template-columns: 1fr; gap: .7rem; }
+    .foot-mark { height: 42px; }
+    .footer-base { justify-content: flex-start; gap: .35rem 1.5rem; }
+
+    .dock { display: flex; }
+    body { padding-bottom: 4.5rem; }
+    /* no bottom margin: it would show a cream strip under the dark footer */
+    .footer { padding-bottom: 1.75rem; }
+}
+
+/* ────────────────────────────────────────────────────────────
+   MOBILE: services and process rebuilt
+   Both were three stacked rows per item (number / title / copy) on a
+   narrow screen, which made the two longest sections on the site. The
+   number now rides on the title's own line and the copy tightens, with
+   no content hidden behind a tap.
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+    /* 1.9 is generous leading for Latin and very loose for Thai on a phone.
+       1.75 still clears Thai's stacked tone marks. */
+    html[lang="th"] body { line-height: 1.75; }
+
+    /* less air around every section header */
+    .section { padding: clamp(2.75rem, 9vw, 4rem) 0; }
+    .sec-head { margin-bottom: 1.85rem; }
+    .sec-index { margin-bottom: .9rem; }
+    .sec-title { font-size: clamp(1.55rem, 6.4vw, 2rem); margin-bottom: .7rem; }
+    .sec-lede { font-size: .92rem; }
+
+    /* out of grid entirely: a grid number column costs a whole row here.
+       This also clears the `grid-column: 2` set at the 1024px breakpoint,
+       which was forcing the copy into an implicit second column. */
+    .svc, .step {
+        display: block;
+        padding: 1.1rem 0;
+    }
+    .step > div { display: contents; }        /* flatten so h3 can sit inline */
+
+    .svc-no, .step-no {
+        display: inline;
+        margin-right: .5rem;
+        padding-top: 0;
+        font-size: .68rem;
+        letter-spacing: .16em;
+    }
+    .svc h3, .step h3 {
+        display: inline;                      /* shares the number's line */
+        font-size: 1.16rem;
+        line-height: 1.5;
+    }
+    .svc p, .step p {
+        grid-column: auto;
+        max-width: none;
+        margin-top: .4rem;
+        font-size: .88rem;
+        line-height: 1.6;
+    }
+    .svc:hover { background: none; }          /* no hover target on touch */
+
+    /* the reasons list carried the same looseness */
+    .why li { padding: .85rem 0; }
+    .why strong { font-size: .93rem; }
+    .why span { font-size: .86rem; line-height: 1.55; }
+
+    .styles { padding: clamp(2.5rem, 8vw, 3.5rem) 0; }
+    .styles-lede { margin-bottom: 1.25rem; font-size: .9rem; }
+    .styles-row { gap: 1rem 1.75rem; }
+
+    .card-meta { flex-direction: column; gap: .25rem; }
+
+    /* ── Work becomes a horizontal rail ──────────────────────
+       Six stacked cards made this the longest scroll on the page.
+       Cards are 82% wide so the next one peeks past the edge — that
+       peek is the affordance telling you it scrolls. Bled out to the
+       screen edges with negative gutters, with scroll-padding so a
+       snapped card still lines up with the section's text above it. */
+    .work-grid {
+        display: flex;
+        grid-template-columns: none;
+        gap: .9rem;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        margin-inline: calc(var(--gut) * -1);
+        padding-inline: var(--gut);
+        padding-bottom: .35rem;
+        scroll-padding-left: var(--gut);
+    }
+    .work-grid::-webkit-scrollbar { display: none; }
+
+    .card {
+        flex: 0 0 82%;
+        min-width: 0;
+        scroll-snap-align: start;
+    }
+    .card-media { aspect-ratio: 4 / 3.2; }
+}
+
+/* ============================================================
+   MOTION / PRINT
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    html, html.no-lenis { scroll-behavior: auto; }
+    .rv, .rv-img { opacity: 1 !important; transform: none !important; }
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+@media print {
+    .nav, .dock, .lb, .filters { display: none !important; }
+    .rv, .rv-img { opacity: 1 !important; }
+    body { background: #fff; }
+}

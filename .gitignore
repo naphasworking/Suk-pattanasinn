@@ -1,0 +1,16 @@
+# OS cruft — OneDrive and Windows both scatter these through image folders
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+desktop.ini
+.DS_Store
+$RECYCLE.BIN/
+
+# Editors
+.vscode/
+*.code-workspace
+*.sublime-*
+
+# Tooling, if any is ever added to this folder
+node_modules/
+package-lock.json

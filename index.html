@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUK Pattanasin | สุขพัฒนสิน — ออกแบบและตกแต่งภายในคลินิก</title>
+    <meta name="description" content="สุขพัฒนสิน (SUK Pattanasin) รับออกแบบและตกแต่งภายในคลินิกทันตกรรม คลินิกเฉพาะทาง คาเฟ่ และร้านค้า พร้อมภาพ 3D ทุกมุมก่อนเริ่มงาน สไตล์มินิมอล ญี่ปุ่น และลักชัวรี">
+    <meta name="keywords" content="ออกแบบคลินิก, ตกแต่งภายในคลินิก, ออกแบบคลินิกทันตกรรม, ตกแต่งคาเฟ่, interior design คลินิก, สุขพัฒนสิน, SUK Pattanasin">
+    <link rel="canonical" href="https://sukpattanasin.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="th_TH">
+    <meta property="og:title" content="SUK Pattanasin | สุขพัฒนสิน — ออกแบบและตกแต่งภายในคลินิก">
+    <meta property="og:description" content="ออกแบบและตกแต่งภายในคลินิกทันตกรรม คลินิกเฉพาะทาง คาเฟ่ และร้านค้า เห็นภาพ 3D ทุกมุมก่อนเริ่มงาน">
+    <meta property="og:image" content="Asset/social/og-cover.jpg">
+
+    <link rel="icon" href="Asset/logo/logo-nav.png">
+
+    <!-- Google Fonts: Latin display + body, with Thai companions -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&family=IBM+Plex+Sans+Thai:wght@200;300;400;500&family=Noto+Serif+Thai:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- GSAP + Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js" defer></script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "SUK Pattanasin",
+      "alternateName": "สุขพัฒนสิน",
+      "description": "ออกแบบและตกแต่งภายในคลินิกทันตกรรม คลินิกเฉพาะทาง คาเฟ่ และร้านค้า",
+      "serviceType": ["Interior design", "Clinic interior fit-out", "Commercial interior design"],
+      "address": { "@type": "PostalAddress", "addressLocality": "Bangkok", "addressCountry": "TH" },
+      "areaServed": "Thailand",
+      "sameAs": ["https://www.facebook.com/sukpattanasin"]
+    }
+    </script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     NAV
+     ══════════════════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+    <div class="shell nav-inner">
+        <a href="#top" class="brand" aria-label="SUK Pattanasin — หน้าแรก">
+            <!-- Emerald variant: the gold mark reads at only 1.66:1 on this cream
+                 background. Emerald-on-cream is 8.80:1. Gold is used on the dark
+                 sections instead, where it reaches 6.96:1. -->
+            <img src="Asset/logo/logo-nav.png" alt="SUK Pattanasin" class="brand-mark brand-gold"
+                 onerror="this.closest('.brand').classList.add('no-mark');this.remove()">
+            <img src="Asset/logo/logo-dark-nav.png" alt="" aria-hidden="true" class="brand-mark brand-emerald"
+                 onerror="this.remove()">
+            <span class="brand-type">
+                <span class="brand-en">SUK PATTANASIN</span>
+                <span class="brand-th">สุขพัฒนสิน</span>
+            </span>
+        </a>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#work" data-th="ผลงาน" data-en="Work">ผลงาน</a></li>
+            <li><a href="#services" data-th="บริการ" data-en="Services">บริการ</a></li>
+            <li><a href="#process" data-th="ขั้นตอนงาน" data-en="Process">ขั้นตอนงาน</a></li>
+            <li><a href="#about" data-th="เกี่ยวกับเรา" data-en="About">เกี่ยวกับเรา</a></li>
+            <li><a href="#contact" class="nav-cta" data-th="ขอใบเสนอราคา" data-en="Get a Quote">ขอใบเสนอราคา</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <div class="lang" role="group" aria-label="Language">
+                <button class="lang-btn active" data-lang="th">TH</button>
+                <span class="lang-sep">/</span>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false">
+                <span></span><span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════════════ -->
+<header class="hero" id="top">
+    <!-- Background plate. The artwork is 2.63:1 and the viewport is not, so it is
+         anchored toward the right where the diamond photo cluster lives; that also
+         pushes the artwork's own baked-in logo and style words off-frame, which
+         stops them competing with the nav logo and the styles band below. -->
+    <div class="hero-bg">
+        <img src="Asset/hero/hero.jpg" alt="SUK Pattanasin — Minimal, Japanese, Clinic, Luxury"
+             onerror="this.closest('.hero-bg').classList.add('is-empty');this.remove()">
+        <span class="hero-scrim" aria-hidden="true"></span>
+    </div>
+
+    <div class="shell hero-inner">
+        <p class="eyebrow rv"
+           data-th="ออกแบบ &amp; ตกแต่งภายใน — คลินิกและพื้นที่เชิงพาณิชย์"
+           data-en="Interior design &amp; fit-out — clinics and commercial spaces">ออกแบบ &amp; ตกแต่งภายใน — คลินิกและพื้นที่เชิงพาณิชย์</p>
+
+        <h1 class="hero-title">
+            <span class="line"><span class="line-in"
+                data-th="งานออกแบบ"
+                data-en="Design that considers">งานออกแบบ</span></span>
+            <span class="line"><span class="line-in em"
+                data-th="ที่ใส่ใจทุกรายละเอียด"
+                data-en="every last detail">ที่ใส่ใจทุกรายละเอียด</span></span>
+        </h1>
+
+        <div class="hero-foot">
+            <p class="hero-desc rv"
+               data-th="รับออกแบบและตกแต่งภายในครบวงจร คลินิกทันตกรรม คลินิกเฉพาะทาง คาเฟ่ และร้านค้า เห็นภาพ 3D ทุกมุมก่อนตัดสินใจ ดูแลต่อเนื่องจนถึงวันเปิดบริการ"
+               data-en="Full-service interior design and fit-out for dental clinics, specialist clinics, cafés and retail. Every angle rendered in 3D before you commit, managed through to opening day.">รับออกแบบและตกแต่งภายในครบวงจร คลินิกทันตกรรม คลินิกเฉพาะทาง คาเฟ่ และร้านค้า เห็นภาพ 3D ทุกมุมก่อนตัดสินใจ ดูแลต่อเนื่องจนถึงวันเปิดบริการ</p>
+            <a href="#contact" class="btn btn-ghost rv" data-th="ปรึกษาฟรี ไม่มีค่าใช้จ่าย" data-en="Free consultation">ปรึกษาฟรี ไม่มีค่าใช้จ่าย</a>
+        </div>
+    </div>
+
+    <span class="scroll-cue" aria-hidden="true"></span>
+</header>
+
+<!-- Everything below slides up over the pinned hero as one plate -->
+<div class="stack">
+
+<!-- ══════════════════════════════════════════════════════════
+     SPECIALISMS
+     Replaced the old stats row. Every number there (years in business,
+     projects delivered) would have been invented — this says the same
+     "we are the right firm" thing using only verifiable facts.
+     If the client supplies real figures, a numeric stat row can go back.
+     ══════════════════════════════════════════════════════════ -->
+<section class="specs">
+    <div class="shell specs-grid">
+        <div class="spec rv">
+            <span class="spec-no">01</span>
+            <span class="spec-name" data-th="คลินิกทันตกรรม" data-en="Dental clinics">คลินิกทันตกรรม</span>
+            <span class="spec-note" data-th="งานที่เราทำมากที่สุด" data-en="The work we do most">งานที่เราทำมากที่สุด</span>
+        </div>
+        <div class="spec rv">
+            <span class="spec-no">02</span>
+            <span class="spec-name" data-th="คลินิกเฉพาะทาง" data-en="Specialist clinics">คลินิกเฉพาะทาง</span>
+            <span class="spec-note" data-th="จักษุ ความงาม และคลินิกเฉพาะโรค" data-en="Eye, aesthetic and specialist practices">จักษุ ความงาม และคลินิกเฉพาะโรค</span>
+        </div>
+        <div class="spec rv">
+            <span class="spec-no">03</span>
+            <span class="spec-name" data-th="คาเฟ่ &amp; ร้านค้า" data-en="Café &amp; retail">คาเฟ่ &amp; ร้านค้า</span>
+            <span class="spec-note" data-th="พื้นที่ที่ต้องสวยและขายได้" data-en="Spaces that have to sell, not just look good">พื้นที่ที่ต้องสวยและขายได้</span>
+        </div>
+        <div class="spec rv">
+            <span class="spec-no">04</span>
+            <span class="spec-name" data-th="ภาพ 3D ก่อนเริ่มงาน" data-en="3D before you commit">ภาพ 3D ก่อนเริ่มงาน</span>
+            <span class="spec-note" data-th="เห็นทุกมุมห้องก่อนจ่ายค่าก่อสร้าง" data-en="See every angle before spending on the build">เห็นทุกมุมห้องก่อนจ่ายค่าก่อสร้าง</span>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     WORK — rendered from the PROJECTS array in script.js
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="work">
+    <div class="shell">
+        <div class="sec-head">
+            <span class="sec-index">01</span>
+            <h2 class="sec-title rv" data-th="ผลงานที่ผ่านมา" data-en="Selected work">ผลงานที่ผ่านมา</h2>
+            <p class="sec-lede rv"
+               data-th="ทุกโครงการเริ่มจากการเข้าใจว่าคลินิกหรือร้านนี้ต้องทำงานอย่างไรในแต่ละวัน"
+               data-en="Every project starts by understanding how the clinic or shop has to work day to day.">ทุกโครงการเริ่มจากการเข้าใจว่าคลินิกหรือร้านนี้ต้องทำงานอย่างไรในแต่ละวัน</p>
+        </div>
+
+        <div class="filters" id="filters"></div>
+        <div class="work-grid" id="work-grid"></div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     STYLES — taken from the client's own cover artwork
+     ══════════════════════════════════════════════════════════ -->
+<section class="styles">
+    <div class="shell">
+        <p class="styles-lede rv"
+           data-th="สี่ภาษาการออกแบบที่เราถนัด — บอกเราว่าคุณชอบแบบไหน"
+           data-en="Four design languages we work in — tell us which one is yours.">สี่ภาษาการออกแบบที่เราถนัด — บอกเราว่าคุณชอบแบบไหน</p>
+        <div class="styles-row">
+            <span class="style-word rv">Minimal</span>
+            <span class="style-word rv">Japanese</span>
+            <span class="style-word rv">Clinic</span>
+            <span class="style-word rv">Luxury</span>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SERVICES
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="services">
+    <div class="shell">
+        <div class="sec-head">
+            <span class="sec-index">02</span>
+            <h2 class="sec-title rv" data-th="สิ่งที่เรารับทำ" data-en="What we do">สิ่งที่เรารับทำ</h2>
+            <p class="sec-lede rv"
+               data-th="ออกแบบและตกแต่งจบในทีมเดียว ไม่ต้องหาผู้ออกแบบและผู้รับเหมาแยกกัน"
+               data-en="Design and fit-out under one roof — no separate designer and contractor to coordinate.">ออกแบบและตกแต่งจบในทีมเดียว ไม่ต้องหาผู้ออกแบบและผู้รับเหมาแยกกัน</p>
+        </div>
+
+        <div class="svc-list">
+            <article class="svc rv">
+                <span class="svc-no">01</span>
+                <h3 data-th="ออกแบบภายใน &amp; ภาพ 3D" data-en="Interior design &amp; 3D">ออกแบบภายใน &amp; ภาพ 3D</h3>
+                <p data-th="วางผังการใช้งาน เลือกวัสดุ และเรนเดอร์ภาพ 3D ทุกมุมห้อง ให้เห็นบรรยากาศจริงก่อนตัดสินใจลงทุน"
+                   data-en="Space planning, material selection and 3D renders of every angle, so you see the real atmosphere before committing budget.">วางผังการใช้งาน เลือกวัสดุ และเรนเดอร์ภาพ 3D ทุกมุมห้อง ให้เห็นบรรยากาศจริงก่อนตัดสินใจลงทุน</p>
+            </article>
+
+            <article class="svc rv">
+                <span class="svc-no">02</span>
+                <h3 data-th="ตกแต่งภายในครบวงจร" data-en="Turnkey fit-out">ตกแต่งภายในครบวงจร</h3>
+                <p data-th="งานผนัง ฝ้า พื้น งานระบบไฟ ประปา แอร์ เฟอร์นิเจอร์บิลท์อิน จนถึงงานเก็บรายละเอียดก่อนเปิดบริการ"
+                   data-en="Walls, ceilings, flooring, electrical, plumbing and HVAC, built-in furniture, through to final detailing before opening.">งานผนัง ฝ้า พื้น งานระบบไฟ ประปา แอร์ เฟอร์นิเจอร์บิลท์อิน จนถึงงานเก็บรายละเอียดก่อนเปิดบริการ</p>
+            </article>
+
+            <article class="svc rv">
+                <span class="svc-no">03</span>
+                <h3 data-th="ออกแบบคลินิก &amp; สถานพยาบาล" data-en="Clinic &amp; healthcare design">ออกแบบคลินิก &amp; สถานพยาบาล</h3>
+                <p data-th="วางผังห้องตรวจ ห้องเอกซเรย์ เส้นทางคนไข้ และงานระบบสุขอนามัย ให้ใช้งานได้จริงและสอดคล้องกับเกณฑ์ขออนุญาตสถานพยาบาล"
+                   data-en="Treatment room layouts, X-ray rooms, patient flow and hygiene systems — practical to work in and aligned with clinic licensing requirements.">วางผังห้องตรวจ ห้องเอกซเรย์ เส้นทางคนไข้ และงานระบบสุขอนามัย ให้ใช้งานได้จริงและสอดคล้องกับเกณฑ์ขออนุญาตสถานพยาบาล</p>
+            </article>
+
+            <article class="svc rv">
+                <span class="svc-no">04</span>
+                <h3 data-th="คาเฟ่ ร้านค้า &amp; ออฟฟิศ" data-en="Café, retail &amp; workspace">คาเฟ่ ร้านค้า &amp; ออฟฟิศ</h3>
+                <p data-th="ออกแบบพื้นที่เชิงพาณิชย์ตั้งแต่หน้าร้านจนถึงหลังบ้าน ให้ลูกค้าอยากถ่ายรูปและพนักงานทำงานได้คล่อง"
+                   data-en="Commercial spaces from shopfront to back-of-house — places customers want to photograph and staff can actually work in.">ออกแบบพื้นที่เชิงพาณิชย์ตั้งแต่หน้าร้านจนถึงหลังบ้าน ให้ลูกค้าอยากถ่ายรูปและพนักงานทำงานได้คล่อง</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     PROCESS
+     ══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="process">
+    <div class="shell">
+        <div class="sec-head">
+            <span class="sec-index">03</span>
+            <h2 class="sec-title rv" data-th="ขั้นตอนการทำงาน" data-en="How we work">ขั้นตอนการทำงาน</h2>
+            <p class="sec-lede rv"
+               data-th="โปร่งใสทุกขั้น รู้ล่วงหน้าว่าสัปดาห์หน้าจะเกิดอะไรขึ้นที่หน้างาน"
+               data-en="Transparent at every stage — you always know what happens on site next week.">โปร่งใสทุกขั้น รู้ล่วงหน้าว่าสัปดาห์หน้าจะเกิดอะไรขึ้นที่หน้างาน</p>
+        </div>
+
+        <ol class="steps">
+            <li class="step rv">
+                <span class="step-no">01</span>
+                <div>
+                    <h3 data-th="ปรึกษา &amp; สำรวจพื้นที่" data-en="Consult &amp; site survey">ปรึกษา &amp; สำรวจพื้นที่</h3>
+                    <p data-th="คุยแนวคิด งบประมาณ และจำนวนห้องที่ต้องการ เข้าวัดพื้นที่จริง ประเมินความเป็นไปได้ให้ฟรี"
+                       data-en="We discuss concept, budget and the rooms you need, measure the actual space, and assess feasibility at no charge.">คุยแนวคิด งบประมาณ และจำนวนห้องที่ต้องการ เข้าวัดพื้นที่จริง ประเมินความเป็นไปได้ให้ฟรี</p>
+                </div>
+            </li>
+            <li class="step rv">
+                <span class="step-no">02</span>
+                <div>
+                    <h3 data-th="ออกแบบ &amp; เรนเดอร์ภาพ 3D" data-en="Design &amp; 3D renders">ออกแบบ &amp; เรนเดอร์ภาพ 3D</h3>
+                    <p data-th="ส่งผังพื้น ตัวอย่างวัสดุ และภาพ 3D ทุกมุมห้อง ปรับแก้ได้จนพอใจก่อนเข้าสู่ขั้นตอนราคา"
+                       data-en="Floor plans, material samples and 3D views of every room — revised until you're happy, before pricing begins.">ส่งผังพื้น ตัวอย่างวัสดุ และภาพ 3D ทุกมุมห้อง ปรับแก้ได้จนพอใจก่อนเข้าสู่ขั้นตอนราคา</p>
+                </div>
+            </li>
+            <li class="step rv">
+                <span class="step-no">03</span>
+                <div>
+                    <h3 data-th="เสนอราคา &amp; ทำสัญญา" data-en="Quotation &amp; contract">เสนอราคา &amp; ทำสัญญา</h3>
+                    <p data-th="ใบเสนอราคาแยกหมวดงาน ระบุวัสดุและยี่ห้อ พร้อมสัญญาที่กำหนดงวดงานและระยะเวลาชัดเจน"
+                       data-en="An itemised quote naming materials and brands, with a contract setting out milestones and timeline.">ใบเสนอราคาแยกหมวดงาน ระบุวัสดุและยี่ห้อ พร้อมสัญญาที่กำหนดงวดงานและระยะเวลาชัดเจน</p>
+                </div>
+            </li>
+            <li class="step rv">
+                <span class="step-no">04</span>
+                <div>
+                    <h3 data-th="เข้าตกแต่ง &amp; รายงานความคืบหน้า" data-en="Fit-out &amp; progress reports">เข้าตกแต่ง &amp; รายงานความคืบหน้า</h3>
+                    <p data-th="ส่งรูปและรายงานความคืบหน้าทุกสัปดาห์ เจ้าของเข้าดูหน้างานได้ตลอดเวลา"
+                       data-en="Photo updates and progress reports every week — you're welcome on site any time.">ส่งรูปและรายงานความคืบหน้าทุกสัปดาห์ เจ้าของเข้าดูหน้างานได้ตลอดเวลา</p>
+                </div>
+            </li>
+            <li class="step rv">
+                <span class="step-no">05</span>
+                <div>
+                    <h3 data-th="ส่งมอบ &amp; รับประกัน" data-en="Handover &amp; warranty">ส่งมอบ &amp; รับประกัน</h3>
+                    <p data-th="ตรวจงานร่วมกัน แก้จุดที่ยังไม่เรียบร้อยจนพอใจ แล้วรับประกันผลงานต่อหลังเปิดบริการ"
+                       data-en="We inspect together, fix every snag until you're satisfied, then warranty the work after opening.">ตรวจงานร่วมกัน แก้จุดที่ยังไม่เรียบร้อยจนพอใจ แล้วรับประกันผลงานต่อหลังเปิดบริการ</p>
+                </div>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ABOUT
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="about">
+    <div class="shell about-grid">
+        <div class="about-media rv-img">
+            <!-- TODO(photo): a team or on-site photo would be stronger here than a
+                 render, since this section is about trust. Asset/about/about.jpg -->
+            <div class="ph ph-about" data-ph="TEAM / SITE PHOTO">
+                <img src="Asset/about/about.jpg" alt="ทีมงาน สุขพัฒนสิน"
+                     onerror="this.closest('.ph').classList.add('is-empty');this.remove()">
+            </div>
+        </div>
+
+        <div class="about-body">
+            <span class="sec-index">04</span>
+            <h2 class="sec-title rv" data-th="เกี่ยวกับสุขพัฒนสิน" data-en="About SUK Pattanasin">เกี่ยวกับสุขพัฒนสิน</h2>
+            <!-- TODO(copy): the client should confirm this and add their founding
+                 year and team size — it is written from their portfolio, not from
+                 anything they have told us directly. -->
+            <p class="rv"
+               data-th="สุขพัฒนสิน เป็นทีมออกแบบและตกแต่งภายในที่ทำงานกับคลินิกและธุรกิจบริการเป็นหลัก เราเข้าใจว่าคลินิกที่ดีต้องมากกว่าความสวย — ผังต้องให้คนไข้เดินสะดวก ทีมแพทย์ทำงานคล่อง และผ่านเกณฑ์ขออนุญาตได้ เราดูแลตั้งแต่ผังพื้นจนถึงป้ายหน้าร้าน แล้วลงมือตกแต่งจนเปิดบริการได้จริง"
+               data-en="SUK Pattanasin is an interior design and fit-out team working mainly with clinics and service businesses. We know a good clinic needs more than good looks — the plan has to move patients smoothly, let the clinical team work efficiently, and satisfy licensing. We handle everything from floor plan to shopfront signage, then carry out the fit-out through to opening.">สุขพัฒนสิน เป็นทีมออกแบบและตกแต่งภายในที่ทำงานกับคลินิกและธุรกิจบริการเป็นหลัก เราเข้าใจว่าคลินิกที่ดีต้องมากกว่าความสวย — ผังต้องให้คนไข้เดินสะดวก ทีมแพทย์ทำงานคล่อง และผ่านเกณฑ์ขออนุญาตได้ เราดูแลตั้งแต่ผังพื้นจนถึงป้ายหน้าร้าน แล้วลงมือตกแต่งจนเปิดบริการได้จริง</p>
+
+            <ul class="why">
+                <li class="rv"><strong data-th="เห็นภาพ 3D ทุกมุมก่อนเริ่มงาน" data-en="Every angle in 3D first">เห็นภาพ 3D ทุกมุมก่อนเริ่มงาน</strong>
+                    <span data-th="ไม่ต้องเสี่ยงจ่ายเงินไปกับแบบที่ยังจินตนาการไม่ออก" data-en="No spending on a design you can only imagine">ไม่ต้องเสี่ยงจ่ายเงินไปกับแบบที่ยังจินตนาการไม่ออก</span></li>
+                <li class="rv"><strong data-th="เข้าใจงานคลินิกโดยเฉพาะ" data-en="We understand clinic work">เข้าใจงานคลินิกโดยเฉพาะ</strong>
+                    <span data-th="ผังห้องตรวจ ห้องเอกซเรย์ และงานระบบที่คลินิกต้องมี" data-en="Treatment rooms, X-ray rooms and the systems a clinic must have">ผังห้องตรวจ ห้องเอกซเรย์ และงานระบบที่คลินิกต้องมี</span></li>
+                <li class="rv"><strong data-th="ออกแบบและตกแต่งจบในทีมเดียว" data-en="Design and build in one team">ออกแบบและตกแต่งจบในทีมเดียว</strong>
+                    <span data-th="ไม่มีการโยนความรับผิดชอบระหว่างผู้ออกแบบกับผู้รับเหมา" data-en="No blame passed between designer and contractor">ไม่มีการโยนความรับผิดชอบระหว่างผู้ออกแบบกับผู้รับเหมา</span></li>
+                <li class="rv"><strong data-th="ราคาชัดเจน แยกหมวดงาน" data-en="Clear, itemised pricing">ราคาชัดเจน แยกหมวดงาน</strong>
+                    <span data-th="ระบุวัสดุและยี่ห้อ ตรวจสอบได้ทุกบรรทัด" data-en="Materials and brands named, every line checkable">ระบุวัสดุและยี่ห้อ ตรวจสอบได้ทุกบรรทัด</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CONTACT
+     ══════════════════════════════════════════════════════════ -->
+<section class="section section-dark" id="contact">
+    <div class="shell contact-grid">
+        <div class="contact-intro">
+            <!-- The gold mark gets its proper home here: 6.96:1 on emerald -->
+            <img src="Asset/logo/logo-nav.png" alt="" class="contact-mark" aria-hidden="true"
+                 onerror="this.remove()">
+            <span class="sec-index light">05</span>
+            <h2 class="sec-title rv" data-th="เริ่มคุยเรื่องพื้นที่ของคุณ" data-en="Let's talk about your space">เริ่มคุยเรื่องพื้นที่ของคุณ</h2>
+            <p class="rv"
+               data-th="ส่งรายละเอียดคร่าว ๆ มาก่อนได้ เราจะติดต่อกลับภายใน 1 วันทำการ พร้อมนัดเข้าสำรวจพื้นที่โดยไม่มีค่าใช้จ่าย"
+               data-en="Send a rough outline and we'll reply within one business day, then arrange a free site survey.">ส่งรายละเอียดคร่าว ๆ มาก่อนได้ เราจะติดต่อกลับภายใน 1 วันทำการ พร้อมนัดเข้าสำรวจพื้นที่โดยไม่มีค่าใช้จ่าย</p>
+
+            <!-- Full contact details moved to the footer, with icons.
+                 These two stay here because a form with no fallback way to
+                 reach a human loses the visitors who don't like forms. -->
+            <ul class="contact-quick">
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span class="sr-only" data-th="โทร" data-en="Phone">โทร</span>
+                    <a href="tel:+66000000000">0X-XXX-XXXX</a>
+                </li>
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span class="sr-only">Line</span>
+                    <a href="https://line.me/ti/p/~LINEID" target="_blank" rel="noopener">@sukpattanasin</a>
+                </li>
+            </ul>
+        </div>
+
+        <form class="form rv" id="lead-form" novalidate>
+            <!-- full-width so the remaining four fields pair up cleanly:
+                 5 fields in a 2-column grid would leave a dead cell -->
+            <div class="field field-full">
+                <label for="f-name" data-th="ชื่อ-นามสกุล *" data-en="Full name *">ชื่อ-นามสกุล *</label>
+                <input type="text" id="f-name" name="name" required>
+            </div>
+            <div class="field">
+                <label for="f-tel" data-th="เบอร์โทรศัพท์ *" data-en="Phone number *">เบอร์โทรศัพท์ *</label>
+                <input type="tel" id="f-tel" name="tel" required>
+            </div>
+            <div class="field">
+                <label for="f-line" data-th="Line ID" data-en="Line ID">Line ID</label>
+                <input type="text" id="f-line" name="line">
+            </div>
+            <div class="field">
+                <label for="f-type" data-th="ประเภทพื้นที่" data-en="Type of space">ประเภทพื้นที่</label>
+                <select id="f-type" name="job_type">
+                    <option value="" data-th="เลือกประเภทพื้นที่" data-en="Select type">เลือกประเภทพื้นที่</option>
+                    <option value="dental" data-th="คลินิกทันตกรรม" data-en="Dental clinic">คลินิกทันตกรรม</option>
+                    <option value="specialty" data-th="คลินิกเฉพาะทาง / คลินิกความงาม" data-en="Specialist / aesthetic clinic">คลินิกเฉพาะทาง / คลินิกความงาม</option>
+                    <option value="cafe" data-th="คาเฟ่ / ร้านอาหาร" data-en="Café / restaurant">คาเฟ่ / ร้านอาหาร</option>
+                    <option value="retail" data-th="ร้านค้า / รีเทล" data-en="Retail">ร้านค้า / รีเทล</option>
+                    <option value="office" data-th="ออฟฟิศ / Co-working" data-en="Office / co-working">ออฟฟิศ / Co-working</option>
+                    <option value="residential" data-th="ที่พักอาศัย" data-en="Residential">ที่พักอาศัย</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="f-budget" data-th="งบประมาณโดยประมาณ" data-en="Approximate budget">งบประมาณโดยประมาณ</label>
+                <select id="f-budget" name="budget">
+                    <option value="" data-th="เลือกช่วงงบประมาณ" data-en="Select a range">เลือกช่วงงบประมาณ</option>
+                    <option value="&lt;1m" data-th="ต่ำกว่า 1 ล้านบาท" data-en="Under ฿1M">ต่ำกว่า 1 ล้านบาท</option>
+                    <option value="1m-3m" data-th="1 – 3 ล้านบาท" data-en="฿1M – 3M">1 – 3 ล้านบาท</option>
+                    <option value="3m-5m" data-th="3 – 5 ล้านบาท" data-en="฿3M – 5M">3 – 5 ล้านบาท</option>
+                    <option value="5m+" data-th="มากกว่า 5 ล้านบาท" data-en="Over ฿5M">มากกว่า 5 ล้านบาท</option>
+                </select>
+            </div>
+            <div class="field field-full">
+                <label for="f-detail" data-th="รายละเอียดพื้นที่" data-en="Space details">รายละเอียดพื้นที่</label>
+                <textarea id="f-detail" name="detail" rows="3"
+                    data-th-ph="เช่น คลินิกทันตกรรม 3 ยูนิต พื้นที่ 80 ตร.ม. ตึกแถวย่านอารีย์"
+                    data-en-ph="e.g. 3-chair dental clinic, 80 sqm shophouse unit in Ari"></textarea>
+            </div>
+            <button type="submit" class="btn btn-solid" data-th="ส่งข้อมูล" data-en="Send enquiry">ส่งข้อมูล</button>
+            <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+        </form>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════════ -->
+<footer class="footer">
+    <div class="shell">
+        <div class="footer-top">
+            <div class="foot-brand-col">
+                <img src="Asset/logo/logo-nav.png" alt="SUK Pattanasin" class="foot-mark" onerror="this.remove()">
+                <p class="foot-tag" data-th="ออกแบบและตกแต่งภายในคลินิกและพื้นที่เชิงพาณิชย์" data-en="Clinic and commercial interior design &amp; fit-out">ออกแบบและตกแต่งภายในคลินิกและพื้นที่เชิงพาณิชย์</p>
+            </div>
+
+            <!-- TODO(contact): every value below is still a placeholder.
+                 Icons are inline SVG so there is no external request and
+                 nothing to break offline; they inherit the gold via stroke. -->
+            <ul class="foot-contact">
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span class="sr-only" data-th="โทร" data-en="Phone">โทร</span>
+                    <a href="tel:+66000000000">0X-XXX-XXXX</a>
+                </li>
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span class="sr-only">Line</span>
+                    <a href="https://line.me/ti/p/~LINEID" target="_blank" rel="noopener">@sukpattanasin</a>
+                </li>
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2.5 6.5 9.5 7 9.5-7"/></svg>
+                    <span class="sr-only" data-th="อีเมล" data-en="Email">อีเมล</span>
+                    <a href="mailto:hello@example.com">hello@example.com</a>
+                </li>
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    <span class="sr-only">Facebook</span>
+                    <a href="https://www.facebook.com/sukpattanasin" target="_blank" rel="noopener">/sukpattanasin</a>
+                </li>
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span class="sr-only" data-th="พื้นที่บริการ" data-en="Service area">พื้นที่บริการ</span>
+                    <span data-th="กรุงเทพฯ และต่างจังหวัด" data-en="Bangkok and upcountry">กรุงเทพฯ และต่างจังหวัด</span>
+                </li>
+                <li>
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+                    <span class="sr-only" data-th="เวลาทำการ" data-en="Hours">เวลาทำการ</span>
+                    <span data-th="จ–ส 09:00–18:00" data-en="Mon–Sat 09:00–18:00">จ–ส 09:00–18:00</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer-base">
+            <p class="foot-copy">© <span id="year"></span> SUK Pattanasin — <span data-th="สุขพัฒนสิน" data-en="สุขพัฒนสิน">สุขพัฒนสิน</span></p>
+            <p class="foot-copy">
+                <a href="https://www.facebook.com/sukpattanasin" target="_blank" rel="noopener">Facebook</a>
+            </p>
+        </div>
+    </div>
+</footer>
+</div><!-- /.stack -->
+
+<!-- Lightbox gallery: horizontal scroll-snap track + dot markers -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Project gallery">
+    <button class="lb-close" id="lb-close" aria-label="ปิด">&times;</button>
+
+    <div class="lb-stage">
+        <div class="lb-track" id="lb-track" tabindex="0"></div>
+        <div class="lb-dots" id="lb-dots" role="tablist" aria-label="รูปภาพ"></div>
+    </div>
+
+    <div class="lb-bar">
+        <p class="lb-title" id="lb-title"></p>
+        <p class="lb-count" id="lb-count"></p>
+    </div>
+</div>
+
+<!-- Sticky mobile call bar -->
+<!-- TODO(contact): same phone/Line as above -->
+<div class="dock">
+    <a href="tel:+66000000000" class="dock-btn" data-th="โทรเลย" data-en="Call now">โทรเลย</a>
+    <a href="https://line.me/ti/p/~LINEID" class="dock-btn dock-line" target="_blank" rel="noopener">Line</a>
+    <a href="#contact" class="dock-btn dock-solid" data-th="ขอใบเสนอราคา" data-en="Get a quote">ขอใบเสนอราคา</a>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
