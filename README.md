@@ -60,6 +60,21 @@ you can delete a whole category just by removing its projects.
 The six entries in there now are **invented placeholders** — replace them with
 real jobs before launch.
 
+### ⚠ 4a. UNRESOLVED: which is the first phone number?
+
+Two sources from the client disagree, and the wrong one is **live right now**:
+
+| Source | First number | Second number |
+|---|---|---|
+| Close-up image sent with "using this 2 numbers" | `081-49**2**-7454` | `081-493-9982` |
+| "BEFORE & AFTER" post graphic (footer strip) | `081-49**3**-7454` | `081-493-9982` |
+
+The second number matches in both. The first differs by one digit (**492 vs 493**).
+
+The site currently uses **081-492-7454**, in three places — the contact block,
+the footer, and the mobile call button. Confirm with the client before launch;
+a wrong number silently loses every lead that taps it.
+
 ### 4. Contact details — `TODO(contact)`
 Three places in `index.html`, all placeholder values right now:
 - Contact section list — phone, Line, email, Facebook, service area
