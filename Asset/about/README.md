@@ -1,7 +1,26 @@
 # ภาพส่วนเกี่ยวกับเรา / About image
 
-วางไฟล์ชื่อ **`about.jpg`** ในโฟลเดอร์นี้
-Put a file named **`about.jpg`** in this folder.
+**ตอนนี้ใช้ภาพหน้าร้าน Comkrit Eye Clinic อยู่** (ครอปจาก `projects/comkrit-eye-clinic/06.jpg`)
+เลือกภาพนี้เพราะเป็นภาพภายนอกภาพเดียวในเว็บทั้งหมด — ภาพอื่นเป็นภายในหมด
+และตรงกับข้อความข้าง ๆ ที่บอกว่า "ดูแลตั้งแต่แบบแปลนจนถึงป้ายหน้าร้าน"
+
+**Currently using the Comkrit Eye Clinic shopfront**, cropped from
+`projects/comkrit-eye-clinic/06.jpg`. It was chosen because it is the only
+exterior in the whole site — everything else is an interior — and it matches the
+claim in the text beside it about handling work through to shopfront signage.
+
+## ยังควรเปลี่ยนเป็นภาพจริง / Still worth replacing
+
+ส่วนนี้พูดเรื่องความน่าเชื่อถือ **ภาพทีมงานหรือภาพหน้างานจริง จะได้ผลกว่าภาพเรนเดอร์**
+ถ้าลูกค้ามีภาพถ่ายจริง ให้วางทับไฟล์ `about.jpg` ได้เลย ไม่ต้องแก้โค้ด
+
+This section is about trust, and **a real photograph of the team or a live site
+would do more work than a render.** If the client has one, drop it over
+`about.jpg` — no code change needed.
+
+---
+
+## สเปคไฟล์ / File spec
 
 | | |
 |---|---|

@@ -736,6 +736,11 @@ html[lang="th"] .contact-intro .sec-title { line-height: 1.3; }
 .foot-copy a { transition: color .3s; }
 .foot-copy a:hover { color: var(--gold); }
 
+/* Two phone numbers under one icon. Stacked rather than inline: side by side
+   they read as one long number, and a separator would strand itself mid-wrap. */
+.tel-pair { display: flex; flex-direction: column; gap: .08rem; min-width: 0; }
+.tel-pair a { font-variant-numeric: tabular-nums; }
+
 /* The two quick contacts kept beside the form */
 .contact-quick { list-style: none; display: flex; flex-wrap: wrap; gap: .75rem 2rem; }
 .contact-quick li { display: flex; align-items: center; gap: .6rem; font-size: .95rem; }
